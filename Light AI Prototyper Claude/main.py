@@ -13,3 +13,15 @@ st.write("An AI-powered tool to categorize incoming community requests and draft
 # Input text box
 user_input = st.text_area("Paste the incoming email or request text here:", height=200)
 
+if st.button("Process & Route Request"):
+    if user_input:
+        with st.spinner("Claude is analyzing and routing..."):
+            # Constructing the structured system prompt
+            system_instruction = (
+                "You are an expert administrative assistant for a community nonprofit. "
+                "Analyze the provided text and strictly output the following sections:\n"
+                "### 1. URGENCY & CATEGORY\n[Assign Category: Crisis, Funding, Volunteer, or General]\n\n"
+                "### 2. KEY METRICS & CONTACTS\n[Extract Name, Email, Phone, and Core Need]\n\n"
+                "### 3. EXECUTIVE SUMMARY\n[A 2-sentence summary of the request]\n\n"
+                "### 4. DRAFT RESPONSE\n[Write a professional, empathetic initial email draft]"
+            )
