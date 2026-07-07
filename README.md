@@ -1,0 +1,1 @@
+# Full-stack-Nonprofit-AI-assistant-prototype
