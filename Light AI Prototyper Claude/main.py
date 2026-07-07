@@ -25,3 +25,17 @@ if st.button("Process & Route Request"):
                 "### 3. EXECUTIVE SUMMARY\n[A 2-sentence summary of the request]\n\n"
                 "### 4. DRAFT RESPONSE\n[Write a professional, empathetic initial email draft]"
             )
+
+            # Call Claude API
+            message = client.messages.create(
+                model="claude-3-5-sonnet",  # Use the current stable high-performance model
+                max_tokens=1000,
+                system=system_instruction,
+                messages=[{"role": "user", "content": user_input}]
+            )
+
+            # Display results
+            st.success("Analysis Complete!")
+            st.markdown(message.content[0].text)
+    else:
+        st.warning("Please paste some text first.")
