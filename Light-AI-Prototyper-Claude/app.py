@@ -8,6 +8,14 @@ client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 st.title("CommunityLink: Nonprofit Request Router")
 st.write("An AI-powered tool to categorize incoming community requests and draft responses.")
 
+if not api_key:
+    st.error("🔑 **API Key Missing:** Please add your ANTHROPIC_API_KEY to the Streamlit Secrets dashboard.")
+else:
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+    except Exception as e:
+        st.error(f"Initialization Error: {e}")
+
 # Input text box
 user_input = st.text_area("Paste the incoming email or request text here:", height=200)
 
