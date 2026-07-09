@@ -26,7 +26,7 @@ if st.button("Process & Route Request"):
 
             # Call Claude API
             message = client.messages.create(
-                model="claude-3-5-sonnet-20240620",
+                model="claude-3-5-sonnet-latest",
                 max_tokens=1000,
                 system=system_instruction,
                 messages=[{"role": "user", "content": user_input}]
