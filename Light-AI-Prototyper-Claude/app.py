@@ -8,6 +8,8 @@ client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 st.title("CommunityLink: Nonprofit Request Router")
 st.write("An AI-powered tool to categorize incoming community requests and draft responses.")
 
+api_key = os.getenv("ANTHROPIC_API_KEY")
+
 if not api_key:
     st.error("🔑 **API Key Missing:** Please add your ANTHROPIC_API_KEY to the Streamlit Secrets dashboard.")
 else:
@@ -32,20 +34,26 @@ if st.button("Process & Route Request"):
                 "### 4. DRAFT RESPONSE\n[Write a professional, empathetic initial email draft]"
             )
 
-            # Call Claude API
-            message = client.messages.create(
-                model="claude-3-5-sonnet-latest",
-                max_tokens=1000,
-                system=system_instruction,
-                messages=[{"role": "user", "content": user_input}]
-            )
+            try:
+                # Call Claude API
+                message = client.messages.create(
+                    model="claude-3-5-sonnet-latest",
+                    max_tokens=1000,
+                    system=system_instruction,
+                    messages=[{"role": "user", "content": user_input}]
+                )
 
 
-            # Display results
-            st.success("Analysis Complete!")
+                # Display results
+                st.success("Analysis Complete!")
 
-            # Pull out the text content safely
-            response_text = message.content[0].text
-            st.markdown(response_text)
+                # Pull out the text content safely
+                response_text = message.content[0].text
+                st.markdown(response_text)
+
+
+            except Exception as e:
+                st.error(f"An API error occured: {e}")
+                st.info("If you see a 404, your API key is invalid or no credits")
     else:
         st.warning("Please paste some text first.")
