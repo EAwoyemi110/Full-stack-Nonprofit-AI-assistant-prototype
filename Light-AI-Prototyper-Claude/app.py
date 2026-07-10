@@ -8,7 +8,7 @@ client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 st.title("CommunityLink: Nonprofit Request Router")
 st.write("An AI-powered tool to categorize incoming community requests and draft responses.")
 
-api_key = os.getenv("ANTHROPIC_API_KEY")
+api_key = st.secrets.get("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
 
 if not api_key:
     st.error("🔑 **API Key Missing:** Please add your ANTHROPIC_API_KEY to the Streamlit Secrets dashboard.")
