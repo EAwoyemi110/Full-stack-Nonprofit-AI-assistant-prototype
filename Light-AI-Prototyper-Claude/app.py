@@ -3,7 +3,6 @@ import anthropic
 import os
 
 # Load API key from the .env file
-client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 st.title("CommunityLink: Nonprofit Request Router")
 st.write("An AI-powered tool to categorize incoming community requests and draft responses.")
@@ -37,7 +36,7 @@ if st.button("Process & Route Request"):
             try:
                 # Call Claude API
                 message = client.messages.create(
-                    model="claude-sonnet-5",
+                    model="claude-3-5-sonnet-latest",
                     max_tokens=1000,
                     system=system_instruction,
                     messages=[{"role": "user", "content": user_input}]
@@ -48,7 +47,7 @@ if st.button("Process & Route Request"):
                 st.success("Analysis Complete!")
 
                 # Pull out the text content safely
-                response_text = message.content[0].text
+                response_text = "".join([block.text for block in message.content if block.type == "text"])
                 st.markdown(response_text)
 
 
